@@ -1,11 +1,11 @@
-let utter = new SpeechSynthesisUtterance();
+let speech = new SpeechSynthesisUtterance();
 
 let blindmode_data = [/*{ blind_mode: "false" }*/];
 let allblindmode_data = localStorage.getItem("allblindmode_data");
 if (allblindmode_data == null) {
-    utter.text = "Welcome to audiophila! Press Enter to Enable Blind Mode";
-    utter.lang = `en-IN`;
-    window.speechSynthesis.speak(utter);
+    speech.text = "Welcome to audiophila! Press Enter to Enable Blind Mode";
+    speech.lang = `en-IN`;
+    window.speechSynthesis.speak(speech);
     let want_blind_mode = confirm("Enable Blind Mode");
     console.log(want_blind_mode);
     if (want_blind_mode) {
@@ -24,9 +24,9 @@ function blind_mode_cheaker() {
     else {
         blindmode_data = JSON.parse(allblindmode_data);
         if (blindmode_data[0].blind_mode == "true") {
-            utter.lang = `en-${blindmode_lang.value}`;
-            utter.volume = blindmode_volume.value;
-            utter.rate = blindmode_speed.value;
+            speech.lang = `en-${blindmode_lang.value}`;
+            speech.volume = blindmode_volume.value;
+            speech.rate = blindmode_speed.value;
             return 1;
         }
         else {
@@ -38,26 +38,11 @@ function blind_mode_cheaker() {
 
 
 
-
-
-// window.onload =  () => {
-//     setTimeout(() => {
-//         utter.text = "Welcome to AudioPhilla, Press enter to continue Blind Mode, else wait for 5 seconds"
-//         window.speechSynthesis.speak(utter);
-//         confirm("Welcome to AudioPhilla\n Press Ok to continue Blind Mode,\n else wait for 5 seconds")
-//     }, 500);
-// }
-
-
-
-
-
-
 function play_audio(text) {
     blind_mode_cheaker()
     if (blind_mode_cheaker() == 1) {
-        utter.text = text;
-        window.speechSynthesis.speak(utter);
+        speech.text = text;
+        window.speechSynthesis.speak(speech);
     }
 }
 function stop_audio() {
@@ -68,8 +53,8 @@ function stop_audio() {
 
 function speaker(text) {
     if (blind_mode_cheaker() == 1) {
-        utter.text = text.innerText
-        window.speechSynthesis.speak(utter);
+        speech.text = text.innerText
+        window.speechSynthesis.speak(speech);
     }
 }
 function stop_speaker() {
@@ -79,7 +64,7 @@ function stop_speaker() {
 }
 function read_input(text) {
     if (blind_mode_cheaker() == 1) {
-        utter.text = text.value;
-        window.speechSynthesis.speak(utter);
+        speech.text = text.value;
+        window.speechSynthesis.speak(speech);
     }
 }
