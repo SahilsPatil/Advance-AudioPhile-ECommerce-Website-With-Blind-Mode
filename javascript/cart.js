@@ -26,7 +26,7 @@ function count_total() {
     return total;
 }
 function remove_all() {
-    localStorage.clear()
+    localStorage.removeItem("all_items")
     items_cart = [];
     add_html();
 }
@@ -160,7 +160,7 @@ function delete_item(id) {
     items_cart.forEach(function (e, index) {
         if (e.id == id) {
             if (items_cart.length == 1) {
-                localStorage.clear()
+                remove_all();
                 items_cart.splice(index, 1)
             }
             else {

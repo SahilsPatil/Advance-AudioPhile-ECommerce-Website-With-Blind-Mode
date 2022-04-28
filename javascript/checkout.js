@@ -115,7 +115,7 @@ function getValue(radio) {
                     Field can not be empty
                 </div>
             </div>
-            <input type="text" class="form_checkout_billing_namefield_input" placeholder="Jhondoe@gpay21" onmouseover="play_audio('Enter UPI number')" onmouseleave="stop_audio()" oninput="read_input(this)">
+            <input id="checkout_upi" type="text" class="form_checkout_billing_namefield_input" placeholder="Jhondoe@gpay21" onmouseover="play_audio('Enter UPI number')" onmouseleave="stop_audio()" oninput="read_input(this)">
         </div>
         <div class="form_checkout_billing_namefield right_margin_20">
             <div class="form_checkout_billing_namefield_name_error">
@@ -126,7 +126,7 @@ function getValue(radio) {
                     Field can not be empty
                 </div>
             </div>
-            <input type="text" class="form_checkout_billing_namefield_input" placeholder="876055" onmouseover="play_audio('Enter UPI PIN')" onmouseleave="stop_audio()" oninput="read_input(this)">
+            <input id="checkout_upi_pin" type="text" class="form_checkout_billing_namefield_input" placeholder="876055" onmouseover="play_audio('Enter UPI PIN')" onmouseleave="stop_audio()" oninput="read_input(this)">
         </div>
         `
     } else if (radio.value == "cod") {
@@ -257,4 +257,5 @@ form.addEventListener("submit", (e) => {
     e.preventDefault()
     create_setup()
     check_email_page_loader()
+    localStorage.removeItem("all_items")
 })
