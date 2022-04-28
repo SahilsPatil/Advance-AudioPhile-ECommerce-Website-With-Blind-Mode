@@ -10,33 +10,90 @@
     <link rel="stylesheet" href="/css/products.css">
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="/css/checkout.css">
+    <link rel="stylesheet" href="/css/feedback.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+ 
 </head>
 
 <body>
 
+    <!-- Feedback Form -->
+    <div class="container" id="container">
+        <div class="post">
+            <div class="text">Thanks for rating us!</div>
+            <div class="edit">EDIT</div>
+        </div>
+        <div class="star-widget">
+            <input type="radio" name="rate" id="rate-5">
+            <label for="rate-5" class="fas fa-star"></label>
+            <input type="radio" name="rate" id="rate-4">
+            <label for="rate-4" class="fas fa-star"></label>
+            <input type="radio" name="rate" id="rate-3">
+            <label for="rate-3" class="fas fa-star"></label>
+            <input type="radio" name="rate" id="rate-2">
+            <label for="rate-2" class="fas fa-star"></label>
+            <input type="radio" name="rate" id="rate-1">
+            <label for="rate-1" class="fas fa-star"></label>
+            <form action="#">
+                <header></header>
+                <div class="textarea">
+                    <textarea cols="30" placeholder="Describe your experience.."></textarea>
+                </div>
+                <div class="btn">
+                    <button type="submit">Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const btn = document.querySelector("button");
+        const post = document.querySelector(".post");
+        const widget = document.querySelector(".star-widget");
+        const editBtn = document.querySelector(".edit");
+        btn.onclick = () => {
+            widget.style.display = "none";
+            post.style.display = "block";
+            container.style.display = "none";
+            setTimeout(() => {
+                
+            }, 2000);
+            editBtn.onclick = () => {
+                widget.style.display = "block";
+                post.style.display = "none";
+            }
+            return false;
+        }
+    </script>
+
+
     <!-- Side Menu -->
     <div class="sidemenu grey_background" id="sidemenu">
-        <div class="sidemenu_opener grey_background" id="sidemenu_opener" onmouseover="play_audio('Blind Mode setting')" onmouseleave="stop_audio()">
+        <div class="sidemenu_opener grey_background" id="sidemenu_opener" onmouseover="play_audio('Blind Mode setting')"
+            onmouseleave="stop_audio()">
             <img src="/images/icon-arrow-right.svg" alt="">
         </div>
         <div class="sidemenu_content">
-            <label for="blindmode" class="sidemenu_content_blindmode sidemenu_input" onmouseover="play_audio('Enable Blind Mode')" onmouseleave="stop_audio()">
+            <label for="blindmode" class="sidemenu_content_blindmode sidemenu_input"
+                onmouseover="play_audio('Enable Blind Mode')" onmouseleave="stop_audio()">
                 <input type="checkbox" name="blindmode" id="blindmode"> Blind Mode
             </label>
             <div class="sidemenu_content_blindmode_speed sidemenu_input">
                 <input type="number" name="blindmode_speed" id="blindmode_speed" step="0.1" value="1.2"
-                    placeholder="Speed" onmouseover="play_audio('Enter Speed')" onmouseleave="stop_audio()" oninput="read_input(this)">
+                    placeholder="Speed" onmouseover="play_audio('Enter Speed')" onmouseleave="stop_audio()"
+                    oninput="read_input(this)">
             </div>
             <div class="sidemenu_content_blindmode_lang sidemenu_input">
-                <select name="blindmode_lang" id="blindmode_lang" class="blindmode_lang" onmouseover="play_audio('Select Language')" onmouseleave="stop_audio()">
-                    <option value="IN" >en-India</option>
+                <select name="blindmode_lang" id="blindmode_lang" class="blindmode_lang"
+                    onmouseover="play_audio('Select Language')" onmouseleave="stop_audio()">
+                    <option value="IN">en-India</option>
                     <option value="CH">en-China</option>
                     <option value="US">en-USA</option>
                 </select>
             </div>
             <div class="sidemenu_content_blindmode_volume sidemenu_input">
                 <input type="number" name="blindmode_volume" id="blindmode_volume" step="2" value="50"
-                    placeholder="Volume" onmouseover="play_audio('Enter Volume')" onmouseleave="stop_audio()" oninput="read_input(this)">
+                    placeholder="Volume" onmouseover="play_audio('Enter Volume')" onmouseleave="stop_audio()"
+                    oninput="read_input(this)">
             </div>
         </div>
     </div>
@@ -127,7 +184,7 @@
 
 
         <div class="light">
-            <div class="backbtn" id="go_back"  onmouseover="play_audio('Go Back')" onmouseleave="stop_audio('Go Back')">
+            <div class="backbtn" id="go_back" onmouseover="play_audio('Go Back')" onmouseleave="stop_audio('Go Back')">
                 Go Back
             </div>
             <form id="form" class="form">
@@ -136,68 +193,86 @@
                         CHECKOUT
                     </div>
                     <div class="form_checkout_billing">
-                        <div class="form_checkout_billing_title" onmouseover="play_audio('BILLING DETAILS')" onmouseleave="stop_audio('BILLING DETAILS')">
+                        <div class="form_checkout_billing_title" onmouseover="play_audio('BILLING DETAILS')"
+                            onmouseleave="stop_audio('BILLING DETAILS')">
                             BILLING DETAILS
                         </div>
                         <div class="form_checkout_billing_fields">
                             <div class="form_checkout_billing_namefield right_margin_20">
                                 <div class="form_checkout_billing_namefield_name_error">
-                                    <div class="form_checkout_billing_namefield_name"  onmouseover="play_audio('Name')" onmouseleave="stop_audio('Name')">
+                                    <div class="form_checkout_billing_namefield_name" onmouseover="play_audio('Name')"
+                                        onmouseleave="stop_audio('Name')">
                                         Name
                                     </div>
                                     <div class="form_checkout_billing_namefield_error">
                                         Field can not be empty
                                     </div>
                                 </div>
-                                <input type="text" required class="form_checkout_billing_namefield_input"
-                                    placeholder="Jhon Doe" onmouseover="play_audio('Enter Your name')" onmouseleave="stop_audio()" oninput="read_input(this)">
+                                <input id="checkout_name" type="text" required
+                                    class="form_checkout_billing_namefield_input" placeholder="Jhon Doe"
+                                    onmouseover="play_audio('Enter Your name')" onmouseleave="stop_audio()"
+                                    oninput="read_input(this)">
                             </div>
                             <div class="form_checkout_billing_namefield">
                                 <div class="form_checkout_billing_namefield_name_error">
-                                    <div class="form_checkout_billing_namefield_name"  onmouseover="play_audio('Email Address')" onmouseleave="stop_audio('Email Address')">
+                                    <div class="form_checkout_billing_namefield_name"
+                                        onmouseover="play_audio('Email Address')"
+                                        onmouseleave="stop_audio('Email Address')">
                                         Email Address
                                     </div>
                                     <div class="form_checkout_billing_namefield_error">
                                         Field can not be empty
                                     </div>
                                 </div>
-                                <input type="email" required class="form_checkout_billing_namefield_input"
-                                    placeholder="jhondoe@gmail.com" onmouseover="play_audio('Enter Your email')" onmouseleave="stop_audio()" oninput="read_input(this)">
+                                <input id="checkout_email" type="email" required
+                                    class="form_checkout_billing_namefield_input" placeholder="jhondoe@gmail.com"
+                                    onmouseover="play_audio('Enter Your email')" onmouseleave="stop_audio()"
+                                    oninput="read_input(this)">
                             </div>
                             <div class="form_checkout_billing_namefield top_margin_20">
                                 <div class="form_checkout_billing_namefield_name_error">
-                                    <div class="form_checkout_billing_namefield_name"  onmouseover="play_audio('Phone Number')" onmouseleave="stop_audio('Phone Number')">
+                                    <div class="form_checkout_billing_namefield_name"
+                                        onmouseover="play_audio('Phone Number')"
+                                        onmouseleave="stop_audio('Phone Number')">
                                         Phone Number
                                     </div>
                                     <div class="form_checkout_billing_namefield_error">
                                         Field can not be empty
                                     </div>
                                 </div>
-                                <input type="tel" required class="form_checkout_billing_namefield_input"
-                                    placeholder="+91 989-765-5390" onmouseover="play_audio('Enter Your Mobile number')" onmouseleave="stop_audio()" oninput="read_input(this)">
+                                <input id="checkout_phone" type="tel" required
+                                    class="form_checkout_billing_namefield_input" placeholder="+91 989-765-5390"
+                                    onmouseover="play_audio('Enter Your Mobile number')" onmouseleave="stop_audio()"
+                                    oninput="read_input(this)">
                             </div>
                         </div>
                     </div>
                     <div class="form_checkout_shipping">
-                        <div class="form_checkout_billing_title"  onmouseover="play_audio('SHIPPING DETAILS')" onmouseleave="stop_audio('SHIPPING DETAILS')">
+                        <div class="form_checkout_billing_title" onmouseover="play_audio('SHIPPING DETAILS')"
+                            onmouseleave="stop_audio('SHIPPING DETAILS')">
                             SHIPPING DETAILS
                         </div>
                         <div class="form_checkout_billing_fields">
                             <div class="form_checkout_billing_namefield_long">
                                 <div class="form_checkout_billing_namefield_name_error">
-                                    <div class="form_checkout_billing_namefield_name"  onmouseover="play_audio('Your Address')" onmouseleave="stop_audio('Your Address')">
+                                    <div class="form_checkout_billing_namefield_name"
+                                        onmouseover="play_audio('Your Address')"
+                                        onmouseleave="stop_audio('Your Address')">
                                         Your Address
                                     </div>
                                     <div class="form_checkout_billing_namefield_error">
                                         Field can not be empty
                                     </div>
                                 </div>
-                                <input type="text" required class="form_checkout_billing_namefield_input"
-                                    placeholder="11 Shanti Nagar" onmouseover="play_audio('Enter Your Address')" onmouseleave="stop_audio()" oninput="read_input(this)">
+                                <input id="checkout_address" type="text" required
+                                    class="form_checkout_billing_namefield_input" placeholder="11 Shanti Nagar"
+                                    onmouseover="play_audio('Enter Your Address')" onmouseleave="stop_audio()"
+                                    oninput="read_input(this)">
                             </div>
                             <div class="form_checkout_billing_namefield right_margin_20 top_margin_20">
                                 <div class="form_checkout_billing_namefield_name_error">
-                                    <div class="form_checkout_billing_namefield_name"  onmouseover="play_audio('Zip Code')" onmouseleave="stop_audio('Zip Code')">
+                                    <div class="form_checkout_billing_namefield_name"
+                                        onmouseover="play_audio('Zip Code')" onmouseleave="stop_audio('Zip Code')">
                                         Zip Code
                                     </div>
                                     <div class="form_checkout_billing_namefield_error">
@@ -205,54 +280,69 @@
 
                                     </div>
                                 </div>
-                                <input type="number" required class="form_checkout_billing_namefield_input"
-                                    placeholder="10001" onmouseover="play_audio('Enter Zip code')" onmouseleave="stop_audio()" oninput="read_input(this)">
+                                <input id="checkout_zip" type="number" required
+                                    class="form_checkout_billing_namefield_input" placeholder="10001"
+                                    onmouseover="play_audio('Enter Zip code')" onmouseleave="stop_audio()"
+                                    oninput="read_input(this)">
                             </div>
                             <div class="form_checkout_billing_namefield top_margin_20">
                                 <div class="form_checkout_billing_namefield_name_error">
-                                    <div class="form_checkout_billing_namefield_name"  onmouseover="play_audio('City')" onmouseleave="stop_audio('City')">
+                                    <div class="form_checkout_billing_namefield_name" onmouseover="play_audio('City')"
+                                        onmouseleave="stop_audio('City')">
                                         City
                                     </div>
                                     <div class="form_checkout_billing_namefield_error">
                                         Field can not be empty
                                     </div>
                                 </div>
-                                <input type="text" required class="form_checkout_billing_namefield_input"
-                                    placeholder="Mumbai" onmouseover="play_audio('Enter Your city')" onmouseleave="stop_audio()" oninput="read_input(this)">
+                                <input id="checkout_city" type="text" required
+                                    class="form_checkout_billing_namefield_input" placeholder="Mumbai"
+                                    onmouseover="play_audio('Enter Your city')" onmouseleave="stop_audio()"
+                                    oninput="read_input(this)">
                             </div>
                             <div class="form_checkout_billing_namefield top_margin_20">
                                 <div class="form_checkout_billing_namefield_name_error">
-                                    <div class="form_checkout_billing_namefield_name"  onmouseover="play_audio('Country')" onmouseleave="stop_audio('Country')">
+                                    <div class="form_checkout_billing_namefield_name"
+                                        onmouseover="play_audio('Country')" onmouseleave="stop_audio('Country')">
                                         Country
                                     </div>
                                     <div class="form_checkout_billing_namefield_error">
                                         Field can not be empty
                                     </div>
                                 </div>
-                                <input type="text" class="form_checkout_billing_namefield_input" required
-                                    placeholder="India" onmouseover="play_audio('Enter Your Country')" onmouseleave="stop_audio()" oninput="read_input(this)">
+                                <input id="checkout_country" type="text" class="form_checkout_billing_namefield_input"
+                                    required placeholder="India" onmouseover="play_audio('Enter Your Country')"
+                                    onmouseleave="stop_audio()" oninput="read_input(this)">
                             </div>
                         </div>
                     </div>
                     <div class="form_checkout_payment">
-                        <div class="form_checkout_billing_title"  onmouseover="play_audio('PAYMENT DETAILS')" onmouseleave="stop_audio('PAYMENT DETAILS')">
+                        <div class="form_checkout_billing_title" onmouseover="play_audio('PAYMENT DETAILS')"
+                            onmouseleave="stop_audio('PAYMENT DETAILS')">
                             PAYMENT DETAILS
                         </div>
                         <div class="form_checkout_billing_fields">
                             <div class="form_checkout_billing_namefield_long">
                                 <div class="form_checkout_payment_namefield_name_error">
-                                    <div class="form_checkout_payment_namefield_name"  onmouseover="play_audio('Payment Method')" onmouseleave="stop_audio('Payment Method')">
+                                    <div class="form_checkout_payment_namefield_name"
+                                        onmouseover="play_audio('Payment Method')"
+                                        onmouseleave="stop_audio('Payment Method')">
                                         Payment Method
                                     </div>
                                     <div class="form_checkout_payment_type">
                                         <div class="form_checkout_payment_type_upi">
                                             <input type="radio" name="ptype" id="upi" value="upi"
                                                 onchange="getValue(this)" checked>
-                                            <div class="form_checkout_payment_type_upi_label"  onmouseover="play_audio('UPI')" onmouseleave="stop_audio('UPI')">UPI</div>
+                                            <div class="form_checkout_payment_type_upi_label"
+                                                onmouseover="play_audio('UPI')" onmouseleave="stop_audio('UPI')">UPI
+                                            </div>
                                         </div>
                                         <div class="form_checkout_payment_type_upi">
-                                            <input type="radio" name="ptype" value="cod" onchange="getValue(this)">
-                                            <div class="form_checkout_payment_type_upi_label"  onmouseover="play_audio('Cash on delivery')" onmouseleave="stop_audio('Cash on delivery')">Cash On Delivery</div>
+                                            <input type="radio" name="ptype" value="cod" id="cod"
+                                                onchange="getValue(this)">
+                                            <div class="form_checkout_payment_type_upi_label"
+                                                onmouseover="play_audio('Cash on delivery')"
+                                                onmouseleave="stop_audio('Cash on delivery')">Cash On Delivery</div>
                                         </div>
                                     </div>
 
@@ -261,27 +351,33 @@
                                     id="form_checkout_billing_namefield_long_output">
                                     <div class="form_checkout_billing_namefield right_margin_20">
                                         <div class="form_checkout_billing_namefield_name_error">
-                                            <div class="form_checkout_billing_namefield_name" onmouseover="speaker(this)" onmouseleave="stop_speaker(this)">
+                                            <div class="form_checkout_billing_namefield_name"
+                                                onmouseover="speaker(this)" onmouseleave="stop_speaker(this)">
                                                 UPI Number
                                             </div>
                                             <div class="form_checkout_billing_namefield_error">
                                                 Field can not be empty
                                             </div>
                                         </div>
-                                        <input type="text" class="form_checkout_billing_namefield_input" required
-                                            placeholder="Jhondoe@gpay21" onmouseover="play_audio('Enter UPI number')" onmouseleave="stop_audio()" oninput="read_input(this)">
+                                        <input id="checkout_upi" type="text"
+                                            class="form_checkout_billing_namefield_input" required
+                                            placeholder="Jhondoe@gpay21" onmouseover="play_audio('Enter UPI number')"
+                                            onmouseleave="stop_audio()" oninput="read_input(this)">
                                     </div>
                                     <div class="form_checkout_billing_namefield right_margin_20">
                                         <div class="form_checkout_billing_namefield_name_error">
-                                            <div class="form_checkout_billing_namefield_name" onmouseover="speaker(this)" onmouseleave="stop_speaker(this)">
+                                            <div class="form_checkout_billing_namefield_name"
+                                                onmouseover="speaker(this)" onmouseleave="stop_speaker(this)">
                                                 UPI PIN
                                             </div>
                                             <div class="form_checkout_billing_namefield_error">
                                                 Field can not be empty
                                             </div>
                                         </div>
-                                        <input type="text" class="form_checkout_billing_namefield_input" required
-                                            placeholder="876055" onmouseover="play_audio('Enter UPI PIN')" onmouseleave="stop_audio()" oninput="read_input(this)">
+                                        <input id="checkout_upi_pin" type="text"
+                                            class="form_checkout_billing_namefield_input" required placeholder="876055"
+                                            onmouseover="play_audio('Enter UPI PIN')" onmouseleave="stop_audio()"
+                                            oninput="read_input(this)">
                                     </div>
                                 </div>
                             </div>
@@ -471,6 +567,7 @@
 <script src="/javascript/cart.js"></script>
 <script src="/javascript/checkout.js"></script>
 <script src="/javascript/sidemenu.js"></script>
+<script src="/javascript/speech.js"></script>
 <script>
     let quantity = document.getElementById("quantity")
     let go_back = document.getElementById("go_back")
