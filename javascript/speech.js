@@ -1069,32 +1069,16 @@ if (innerWidth>=768) {
         }
     });
 } else {
-    (function () {
-        var delay;
-        var longpress = 1300;
-          document.addEventListener('mousedown', function (e) {
-            delay = setTimeout(check, longpress);
-            function check() {
-                e.preventDefault();
-                try {
-                    recognition.start();
-                
-                } catch (error) {
-                    recognition.stop();
-                    console.log(error);
-                }
-            }
-          }, true);
-          
-        //   document.addEventListener('mouseup', function (e) {
-        //     clearTimeout(delay);
-        //   });
-          
-        //   document.addEventListener('mouseout', function (e) {
-        //     clearTimeout(delay);
-        //   });
-          
-    }());
+    document.addEventListener("dblclick", (e) => {
+        e.preventDefault();
+        try {
+            recognition.start();
+    
+        } catch (error) {
+            recognition.stop();
+            console.log(error);
+        }
+    });
 }
 
 document.addEventListener("click", (e) => {
