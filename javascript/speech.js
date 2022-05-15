@@ -16,7 +16,9 @@ let allhandlessmode_data = localStorage.getItem("allhandlessmode_data");
 handlessmode_checker();
 if (handlessmode_data[0].handless_mode == "true") {
     recognition.continuous = true;
-    recognition.start();
+    setTimeout(async () => {
+        recognition.start();
+    }, 2000);
 }
 
 function handlessmode_checker() {
@@ -77,383 +79,183 @@ recognition.onresult = (event) => {
     let transcript = event.results[event.results.length - 1][0].transcript;
     transcript = transcript.replace(".", "").toLowerCase().replace("listening ", "").replace("handless mode enabled","");
     console.log(transcript);
-
-    switch (transcript) {
-        case "home":
-        case "home menu":
-        case "open home":
-        case "back to home":
-        case "back home":
+    if ((transcript.includes("enable") && transcript.includes("hand")) || (transcript.includes("enable") && transcript.includes("headless")) || (transcript.includes("open") && transcript.includes("hand")) || (transcript.includes("enable") && transcript.includes("end"))) {
+        if (handlessmode_data[0].handless_mode == "false") {
+            handlessmode_data[0].handless_mode = "true";
+            handlessmode_data = JSON.stringify(handlessmode_data);
+            localStorage.setItem("allhandlessmode_data", handlessmode_data);
             recognition.stop();
-            play_audio('Opening HomePage!')
-            document.location.href = 'http://127.0.0.1:5500'
-            break;
-
-        case "headphones":
-        case "headphones menu":
-        case "headphone":
-        case "headphone menu":
-        case "open headphones":
-        case "open headphone":
+            play_audio('handless mode enabled')
+            setTimeout(async () => {
+                recognition.start();
+                console.log(handlessmode_data[0].handless_mode);
+            }, 2000);
+        } else {
+            play_audio('handless mode already enabled')
+        }
+        recognition.continuous = true;
+    }
+    if ((transcript.includes("disable") && transcript.includes("hand")) || (transcript.includes("disable") && transcript.includes("headless")) || (transcript.includes("close") && transcript.includes("hand")) || (transcript.includes("disable") && transcript.includes("end"))) {
+        if (handlessmode_data[0].handless_mode == "true") {
+            handlessmode_data[0].handless_mode = "false";
+            handlessmode_data = JSON.stringify(handlessmode_data);
+            localStorage.setItem("allhandlessmode_data", handlessmode_data);
             recognition.stop();
-            play_audio('Opening Headphones!')
-            document.location.href = 'http://127.0.0.1:5500/html/headphones.html'
-            break;
-
-        case "speakers":
-        case "speakers menu":
-        case "speaker":
-        case "speaker menu":
-        case "open speakers":
-        case "open speaker":
-            recognition.stop();
+            play_audio('handless mode disabled')
+        } else {
+            play_audio('handless mode is already disabled')
+        }
+        recognition.continuous = false;
+    }
+    if (transcript.includes("home") || transcript.includes("home")) {
+        recognition.stop();
+        play_audio('Opening HomePage!')
+        document.location.href = '/../../../';
+    }
+    if (transcript.includes("headphone") || transcript.includes("headphones")) {
+        recognition.stop();
+        play_audio('Opening Headphones!')
+        document.location.href = '/../../../../html/headphones.html'
+    }
+    if (transcript.includes("speaker")) {
+        recognition.stop();
             play_audio('Opening Speakers!')
-            document.location.href = 'http://127.0.0.1:5500/html/speakers.html'
-            break;
-
-        case "earphones":
-        case "earphones menu":
-        case "earphone":
-        case "earphone menu":
-        case "open earphones":
-        case "open earphone":
-            recognition.stop();
+            document.location.href = '/../../../../html/speakers.html'
+    }
+    if (transcript.includes("earphone")) {
+        recognition.stop();
             play_audio('Opening Earthphones!')
-            document.location.href = 'http://127.0.0.1:5500/html/earthphones.html'
-            break;
-
-        case "** 99 mark 2":
-        case "** 99 mark two":
-        case "open ** 99 mark 2":
-        case "open ** 99 mark two":
-            recognition.stop();
-            play_audio('Opening XX99 MARK II HEADPHONES!')
-            document.location.href = 'http://127.0.0.1:5500/html/products/headphones/XX99_MARK_II_HEADPHONES.html'
-            break;
-
-        case "** 99 mark 1":
-        case "** 99 mark one":
-        case "open ** 99 mark 1":
-        case "open ** 99 mark one":
-            recognition.stop();
+            document.location.href = '/../../../../html/earthphones.html'
+    }
+    if ((transcript.includes("9") && transcript.includes("2")) || (transcript.includes("9") && transcript.includes("two"))|| (transcript.includes("9") && transcript.includes("too"))) {
+        recognition.stop();
+        play_audio('Opening XX99 MARK II HEADPHONES!')
+        document.location.href = '/../../../../html/products/headphones/XX99_MARK_II_HEADPHONES.html'
+    }
+    if ((transcript.includes("9") && transcript.includes("1")) || (transcript.includes("9") && transcript.includes("one"))|| (transcript.includes("9") && transcript.includes("on"))) {
+        recognition.stop();
             play_audio('Opening XX99 MARK 1 HEADPHONES!')
-            document.location.href = 'http://127.0.0.1:5500/html/products/headphones/XX99_MARK_I_HEADPHONES.html'
-            break;
-
-        case "** 59":
-        case "open ** 59":
-            recognition.stop();
+            document.location.href = '/../../../../html/products/headphones/XX99_MARK_I_HEADPHONES.html'
+    }
+    if ((transcript.includes("59") && transcript.includes("**")) || (transcript.includes("**") && transcript.includes("59"))|| (transcript.includes("xx") && transcript.includes("59"))) {
+        recognition.stop();
             play_audio('Opening XX59!')
-            document.location.href = 'http://127.0.0.1:5500/html/products/headphones/XX59_HEADPHONES.html'
-            break;
-
-        case "zx 9 speaker":
-        case "zx 9 speakers":
-        case "zx 9":
-        case "open zx 9 speaker":
-        case "open zx 9":
-            recognition.stop();
+            document.location.href = '/../../../../html/products/headphones/XX59_HEADPHONES.html'
+    }
+    if ((transcript.includes("zx") && transcript.includes("9")) || (transcript.includes("z*") && transcript.includes("9"))|| (transcript.includes("z *") && transcript.includes("9"))) {
+        recognition.stop();
             play_audio('opening zx9 speaker!')
-            document.location.href = 'http://127.0.0.1:5500/html/products/speakers/zx9_speaker.html'
-            break;
-
-        case "zx 7 speaker":
-        case "zx 7 speakers":
-        case "zx 7":
-        case "open zx 7 speaker":
-        case "open zx 7":
-            recognition.stop();
-            play_audio('opening zx7 speaker!')
-            document.location.href = 'http://127.0.0.1:5500/html/products/speakers/zx7_speaker.html'
-            break;
-
-        case "yx 1 earphones":
-        case "yx one earphones":
-        case "yx 1 earphone":
-        case "yx one earphone":
-        case "yx 1":
-        case "open yx 1 earphone":
-        case "open yx 1":
-            recognition.stop();
-            play_audio('opening yx1 earphones!')
-            document.location.href = 'http://127.0.0.1:5500/html/products/earthphones/YX1_WIRELESS_EARPHONES.html'
-            break;
-
-        case "facebook link":
-        case "open facebook link":
-            recognition.stop();
-            play_audio('opening facebook link!')
-            document.location.href = 'facebook.com'
-            break;
-
-        case "instagram link":
-        case "insta link":
-        case "open instagram link":
-        case "open insta link":
-            recognition.stop();
-            play_audio('opening instagram link!')
-            document.location.href = 'https://instagram.com/audiophileoffical?utm_medium=copy_link'
-            break;
-
-        case "twitter link":
-        case "open twitter link":
-            recognition.stop();
-            play_audio('opening twitter link')
-            document.location.href = 'https://twitter.com/real_audiophile?t=fibt0aoYFB3mZDvz0vn9Q&s=09'
-            break;
-
-        case "open blind mode setting":
-        case "open blind mode settings":
-        case "blind mode setting":
-        case "blind mode settings":
-        case "blind mode":
-        case "blind":
-        case "open blind mode settings":
-        case "open blind mode setting":
-            if (!is_sidemenu_open) {
-                sidemenu.style.left = "-10px";
-                sidemenu.style.transition = "0.1s";
-                is_sidemenu_open = true;
-            }
-            else {
-                play_audio("blind mode setting already opened")
-            }
-            break;
-
-        case "close blind mode setting":
-        case "close blind mode settings":
-        case "close blind mode settings":
-        case "close blind mode setting":
-        case "close blind":
-            if (!is_sidemenu_open) {
-                play_audio("blind mode setting already closed")
-            }
-            else {
-                sidemenu.style.left = "-179px";
-                sidemenu.style.transition = "0.1s";
-                is_sidemenu_open = false;
-            }
-            break;
-
-        case "enable blind mode":
-        case "blind mode enable":
-        case "enable blind":
-        case "on blind":
-        case "blind on":
-        case "blind mode on":
-            blindmode.checked = true;
+            document.location.href = '/../../../../html/products/speakers/zx9_speaker.html'
+    }
+    if ((transcript.includes("zx") && transcript.includes("7")) || (transcript.includes("z*") && transcript.includes("7"))|| (transcript.includes("z *") && transcript.includes("7"))) {
+        recognition.stop();
+        play_audio('opening zx7 speaker!')
+        document.location.href = '/../../../../html/products/speakers/zx7_speaker.html'
+    }
+    if ((transcript.includes("yx") && transcript.includes("1")) || (transcript.includes("y*") && transcript.includes("1"))|| (transcript.includes("y *") && transcript.includes("1"))) {
+        recognition.stop();
+        play_audio('opening yx1 earphones!')
+            document.location.href = '/../../../../html/products/earthphones/YX1_WIRELESS_EARPHONES.html'
+    }
+    if ((transcript.includes("open") && transcript.includes("blind"))) {
+        if (!is_sidemenu_open) {
+            sidemenu.style.left = "-10px";
+            sidemenu.style.transition = "0.1s";
+            is_sidemenu_open = true;
+        }
+        else {
+            play_audio("blind mode setting already opened")
+        }
+    }
+    if ((transcript.includes("close") && transcript.includes("blind"))) {
+        if (!is_sidemenu_open) {
+            play_audio("blind mode setting already closed")
+        }
+        else {
+            sidemenu.style.left = "-179px";
+            sidemenu.style.transition = "0.1s";
+            is_sidemenu_open = false;
+        }
+    }
+    if ((transcript.includes("enable") && transcript.includes("blind")) || (transcript.includes("on") && transcript.includes("blind"))) {
+        blindmode.checked = true;
             blindmode_data = [{ blind_mode: "true" }];
             blindmode_data = JSON.stringify(blindmode_data)
             localStorage.setItem("allblindmode_data", blindmode_data);
-            break;
-
-        case "disable blind mode":
-        case "blind mode disable":
-        case "disable blind":
-        case "off blind":
-        case "blind off":
-        case "blind mode off":
-            blindmode.checked = false;
+    }
+    if ((transcript.includes("disable") && transcript.includes("blind")) || (transcript.includes("off") && transcript.includes("blind"))) {
+        blindmode.checked = false;
             blindmode_data = [{ blind_mode: "false" }];
             blindmode_data = JSON.stringify(blindmode_data)
             localStorage.setItem("allblindmode_data", blindmode_data);
-            break;
-
-        case "enable handless mode":
-        case "enable handless mod":
-        case "handless mode on":
-        case "on handless mode":
-        case "on handless":
-        case "handless on":
-        case "handless mode enable":
-        case "handless enable":
-        case "handless mode":
-        case "handless":
-        case "enable headless mode":
-        case "enable endless mode":
-        case "handsfree":
-        case "hands free":
-        case "enable handsfree":
-        case "enable hands free":
-        case "handfree":
-        case "hand free":
-        case "enable handfree":
-        case "enable hand free":
-            if (handlessmode_data[0].handless_mode == "false") {
-                handlessmode_data[0].handless_mode = "true";
-                handlessmode_data = JSON.stringify(handlessmode_data);
-                localStorage.setItem("allhandlessmode_data", handlessmode_data);
-                recognition.stop();
-                play_audio('handless mode enabled')
-                setTimeout(async () => {
-                    recognition.start();
-                    console.log(handlessmode_data[0].handless_mode);
-                }, 500);
-            } else {
-                play_audio('handless mode already enabled')
-            }
-            recognition.continuous = true;
-            break;
-
-        case "disable handless mode":
-        case "handless mode off":
-        case "off handless mode":
-        case "off handless":
-        case "handless off":
-        case "handless mode disable":
-        case "handless disable":
-        case "handless mode":
-        case "handless":
-        case "disable headless mode":
-        case "disable endless mode":
-        case "handsfree":
-        case "disable handsfree":
-        case "handfree":
-        case "disable handfree":
+    }
+    if ((transcript.includes("facebook"))) {
+        recognition.stop();
+                    play_audio('opening facebook link!')
+                    document.location.href = 'facebook.com'
+    }
+    if ((transcript.includes("insta"))) {
+        recognition.stop();
+                    play_audio('opening instagram link!')
+                    document.location.href = 'https://instagram.com/audiophileoffical?utm_medium=copy_link'
+    }
+    if ((transcript.includes("twitter"))) {
+        recognition.stop();
+        play_audio('opening twitter link')
+        document.location.href = 'https://twitter.com/real_audiophile?t=fibt0aoYFB3mZDvz0vn9Q&s=09'
+    }
+    if ((transcript.includes("scroll") && transcript.includes("down") )) {
+        window.scrollBy(0, 500);
+    }
+    if ((transcript.includes("scroll") && transcript.includes("up") )) {
+        window.scrollBy(0, -500);
+    }
+    if ((transcript.includes("blind") && transcript.includes("speed") )) {
+        if (!is_sidemenu_open) {
+            sidemenu.style.left = "-10px";
+            sidemenu.style.transition = "0.1s";
+            is_sidemenu_open = true;
+        }
+        document.getElementById("blindmode_speed").click()
+        recognition.stop();
+        temp_recognition.start();
+        temp_recognition.onstart = () => {
+            play_audio('Enter blind mode speed');
+            console.log('Enter Blind mode');
+        }
+        temp_recognition.onerror = () => {
+            console.log('sorry, not understand!');
+            play_audio('sorry, not understand!');
+            setTimeout(() => {
+                temp_recognition.start();
+            }, 500);
+        }
+        temp_recognition.onspeechend = function () {
+            console.log('Listing Stoped!');
+        }
+        temp_recognition.onresult = (e) => {
+            let temp_transcript = e.results[e.results.length - 1][0].transcript;
+            temp_transcript = temp_transcript.replace(".", "").toLowerCase().replace("Enter blind mode speed ","");
+            temp_transcript = parseFloat(temp_transcript)
+            console.log(temp_transcript);
+            blindmode_speed.value = temp_transcript;
+            play_audio('blind mode speed set sucessfully');
+            blind_mode_cheaker();
             if (handlessmode_data[0].handless_mode == "true") {
-                handlessmode_data[0].handless_mode = "false";
-                handlessmode_data = JSON.stringify(handlessmode_data);
-                localStorage.setItem("allhandlessmode_data", handlessmode_data);
-                recognition.stop();
-                play_audio('handless mode disabled')
+                recognition.start();
             } else {
-                play_audio('handless mode is already disabled')
+                recognition.stop();
             }
-            recognition.continuous = false;
-            break;
-
-        case "scroll down auto":
-        case "down auto":
-            setInterval(() => {
-                window.scrollBy(0, 10);
-            }, 25);
-            break;
-
-        case "scroll up auto":
-        case "up auto":
-            setInterval(() => {
-                window.scrollBy(0, -10);
-            }, 25);
-            break;
-
-        case "scroll down":
-        case "scroll down.":
-        case "down":
-            window.scrollBy(0, 500);
-            break;
-
-        case "scroll up":
-        case "scroll up.":
-        case "up":
-            window.scrollBy(0, -500);
-            break;
-
-        case "scroll bottom":
-        case "bottom":
-        case "footer":
-            window.scrollBy(0, 500000);
-            break;
-
-        case "scroll top":
-        case "top":
-        case "header":
-            window.scrollBy(0, -500000);
-            break;
-
-        case "back":
-        case "go back":
-            recognition.stop();
-            window.history.back();
-            setTimeout(() => {
-                recognition.start();
-            }, 500);
-            break;
-
-        case "forward":
-        case "go forward":
-            recognition.stop();
-            window.history.forward();
-            setTimeout(() => {
-                recognition.start();
-            }, 500);
-            break;
-
-        case "set blind mode speed":
-        case "blind mode speed":
-            if (!is_sidemenu_open) {
-                sidemenu.style.left = "-10px";
-                sidemenu.style.transition = "0.1s";
-                is_sidemenu_open = true;
-            }
-            document.getElementById("blindmode_speed").click()
-            recognition.stop();
-            temp_recognition.start();
-            temp_recognition.onstart = () => {
-                play_audio('Enter blind mode speed');
-                console.log('Enter Blind mode');
-            }
-            temp_recognition.onerror = () => {
-                console.log('sorry, not understand!');
-                play_audio('sorry, not understand!');
-                setTimeout(() => {
-                    temp_recognition.start();
-                }, 500);
-            }
-            temp_recognition.onspeechend = function () {
-                console.log('Listing Stoped!');
-            }
-            temp_recognition.onresult = (e) => {
-                let temp_transcript = e.results[e.results.length - 1][0].transcript;
-                temp_transcript = temp_transcript.replace(".", "").toLowerCase().replace("Enter blind mode speed ","");
-                temp_transcript = parseFloat(temp_transcript)
-                console.log(temp_transcript);
-                blindmode_speed.value = temp_transcript;
-                play_audio('blind mode speed set sucessfully');
-                blind_mode_cheaker();
-                if (handlessmode_data[0].handless_mode == "true") {
-                    recognition.start();
-                } else {
-                    recognition.stop();
-                }
-            }
-            break;
-
-        
-        case "increase":
-        case "increase quantity":
-        case "increase quantity":
-            // recognition.stop();
-            quantity.innerText = parseInt(quantity.innerText)+1;
-            // if (handlessmode_data[0].handless_mode == "true") {
-            //     setTimeout(() => {
-            //         recognition.start();
-            //     }, 500);
-            // } else {
-            //     recognition.stop();
-            // }
-            break;
-
-        
-        case "decrease":
-        case "decrease quantity":
-        case "decrease quantity":
-            // recognition.stop();
-            quantity.innerText = parseInt(quantity.innerText)-1;
-            // if (handlessmode_data[0].handless_mode == "true") {
-            //     setTimeout(() => {
-            //         recognition.start();
-            //     }, 500);
-            // } else {
-            //     recognition.stop();
-            // }
-            break;
-
-
-
-        case "set quantity":
-        case "quantity":
-        case "enter quantity":
-            recognition.stop();
+        }
+    }
+    if ((transcript.includes("increase") && transcript.includes("quantity") )) {
+        quantity.innerText = parseInt(quantity.innerText)+1;
+    }
+    if ((transcript.includes("decrease") && transcript.includes("quantity") )) {
+        quantity.innerText = parseInt(quantity.innerText)-1;
+    }
+    if ((transcript.includes("set") && transcript.includes("quantity") ) || (transcript.includes("enter") && transcript.includes("quantity"))) {
+        recognition.stop();
             temp_recognition.start();
             if (header_cart_is_open) {
                 temp_recognition.onstart = () => {
@@ -554,7 +356,267 @@ recognition.onresult = (event) => {
                     }
                 }
             }
+    }
+
+    switch (transcript) {
+        
+            // case "facebook link":
+            //     case "open facebook link":
+            //         recognition.stop();
+            //         play_audio('opening facebook link!')
+            //         document.location.href = 'facebook.com'
+            //         break;
+        
+            //     case "instagram link":
+            //     case "insta link":
+            //     case "open instagram link":
+            //     case "open insta link":
+            //         recognition.stop();
+            //         play_audio('opening instagram link!')
+            //         document.location.href = 'https://instagram.com/audiophileoffical?utm_medium=copy_link'
+            //         break;
+        
+            //     case "twitter link":
+            //     case "open twitter link":
+            //         recognition.stop();
+            //         play_audio('opening twitter link')
+            //         document.location.href = 'https://twitter.com/real_audiophile?t=fibt0aoYFB3mZDvz0vn9Q&s=09'
+            //         break;            
+
+        
+        case "scroll down auto":
+        case "down auto":
+            setInterval(() => {
+                window.scrollBy(0, 10);
+            }, 25);
             break;
+
+        case "scroll up auto":
+        case "up auto":
+            setInterval(() => {
+                window.scrollBy(0, -10);
+            }, 25);
+            break;
+
+        // case "scroll down":
+        // case "scroll down.":
+        // case "down":
+        //     window.scrollBy(0, 500);
+        //     break;
+
+        // case "scroll up":
+        // case "scroll up.":
+        // case "up":
+        //     window.scrollBy(0, -500);
+        //     break;
+
+        case "scroll bottom":
+        case "bottom":
+        case "footer":
+            window.scrollBy(0, 500000);
+            break;
+
+        case "scroll top":
+        case "top":
+        case "header":
+            window.scrollBy(0, -500000);
+            break;
+
+        case "back":
+        case "go back":
+            recognition.stop();
+            window.history.back();
+            setTimeout(() => {
+                recognition.start();
+            }, 500);
+            break;
+
+        case "forward":
+        case "go forward":
+            recognition.stop();
+            window.history.forward();
+            setTimeout(() => {
+                recognition.start();
+            }, 500);
+            break;
+
+        // case "set blind mode speed":
+        // case "blind mode speed":
+        //     if (!is_sidemenu_open) {
+        //         sidemenu.style.left = "-10px";
+        //         sidemenu.style.transition = "0.1s";
+        //         is_sidemenu_open = true;
+        //     }
+        //     document.getElementById("blindmode_speed").click()
+        //     recognition.stop();
+        //     temp_recognition.start();
+        //     temp_recognition.onstart = () => {
+        //         play_audio('Enter blind mode speed');
+        //         console.log('Enter Blind mode');
+        //     }
+        //     temp_recognition.onerror = () => {
+        //         console.log('sorry, not understand!');
+        //         play_audio('sorry, not understand!');
+        //         setTimeout(() => {
+        //             temp_recognition.start();
+        //         }, 500);
+        //     }
+        //     temp_recognition.onspeechend = function () {
+        //         console.log('Listing Stoped!');
+        //     }
+        //     temp_recognition.onresult = (e) => {
+        //         let temp_transcript = e.results[e.results.length - 1][0].transcript;
+        //         temp_transcript = temp_transcript.replace(".", "").toLowerCase().replace("Enter blind mode speed ","");
+        //         temp_transcript = parseFloat(temp_transcript)
+        //         console.log(temp_transcript);
+        //         blindmode_speed.value = temp_transcript;
+        //         play_audio('blind mode speed set sucessfully');
+        //         blind_mode_cheaker();
+        //         if (handlessmode_data[0].handless_mode == "true") {
+        //             recognition.start();
+        //         } else {
+        //             recognition.stop();
+        //         }
+        //     }
+        //     break;
+
+        
+        // case "increase":
+        // case "increase quantity":
+        // case "increase quantity":
+        //     // recognition.stop();
+        //     quantity.innerText = parseInt(quantity.innerText)+1;
+        //     // if (handlessmode_data[0].handless_mode == "true") {
+        //     //     setTimeout(() => {
+        //     //         recognition.start();
+        //     //     }, 500);
+        //     // } else {
+        //     //     recognition.stop();
+        //     // }
+        //     break;
+
+        
+        // case "decrease":
+        // case "decrease quantity":
+        // case "decrease quantity":
+        //     // recognition.stop();
+        //     quantity.innerText = parseInt(quantity.innerText)-1;
+        //     // if (handlessmode_data[0].handless_mode == "true") {
+        //     //     setTimeout(() => {
+        //     //         recognition.start();
+        //     //     }, 500);
+        //     // } else {
+        //     //     recognition.stop();
+        //     // }
+        //     break;
+
+
+
+        // case "set quantity":
+        // case "quantity":
+        // case "enter quantity":
+        //     recognition.stop();
+        //     temp_recognition.start();
+        //     if (header_cart_is_open) {
+        //         temp_recognition.onstart = () => {
+        //             play_audio('Enter quantity & name of product');
+        //             console.log('Enter quantity & name of product');
+        //         }
+        //         temp_recognition.onerror = () => {
+        //             console.log('sorry, not understand!');
+        //             play_audio('sorry, not understand!');
+        //             setTimeout(() => {
+        //                 temp_recognition.start();
+        //             }, 500);
+        //         }
+        //         temp_recognition.onspeechend = function () {
+        //             console.log('Listing Stoped!');
+        //             play_audio('listening stoped');
+        //         }
+        //         temp_recognition.onresult = (e) => {
+        //             let temp_transcript = e.results[e.results.length - 1][0].transcript;
+        //             temp_transcript = temp_transcript.replace(".", "").toLowerCase().replace("Enter quantity & name of product ","");
+        //             let product_quantity = parseInt(temp_transcript.substring(0, temp_transcript.indexOf(' ')));
+        //             let product = temp_transcript.substring(temp_transcript.indexOf(' ') + 1);
+        //             console.log(product_quantity);
+        //             console.log(product);
+        //             create_setup()
+        //             switch (product) {
+        //                 case "** 59":
+        //                     var id = 3;
+        //                     for (var e of items_cart) {
+        //                         if (e.id == id) {
+        //                             e.quantity = parseInt(product_quantity);
+        //                             localStorage.setItem("all_items", JSON.stringify(items_cart))
+        //                             break;
+        //                         }
+        //                     }
+        //                     break;
+        //                 case "** 99 mark 2":
+        //                     id = 1;
+        //                     for (var e of items_cart) {
+        //                         if (e.id == id) {
+        //                             e.quantity = parseInt(product_quantity);
+        //                             localStorage.setItem("all_items", JSON.stringify(items_cart))
+        //                             break;
+        //                         }
+        //                     }
+        //                     break;
+        //                 case "** 99 mark one":
+        //                     id = 2;
+        //                     for (var e of items_cart) {
+        //                         if (e.id == id) {
+        //                             e.quantity = parseInt(product_quantity);
+        //                             localStorage.setItem("all_items", JSON.stringify(items_cart))
+        //                             break;
+        //                         }
+        //                     }
+        //                     break;
+
+        //                 default:
+        //                     play_audio("sorry product not found or not understand")
+        //                     break;
+        //             }
+        //             add_html()
+        //             header_cart_loader()
+        //             play_audio('quantity set sucessfully');
+        //             if (handlessmode_data[0].handless_mode == "true") {
+        //                 recognition.start();
+        //             } else {
+        //                 recognition.stop();
+        //             }
+        //         }
+        //     } else {
+        //         temp_recognition.onstart = () => {
+        //             play_audio('Enter quantity');
+        //             console.log('Enter quantity');
+        //         }
+        //         temp_recognition.onerror = () => {
+        //             console.log('sorry, not understand!');
+        //             play_audio('sorry, not understand!');
+        //             setTimeout(() => {
+        //                 temp_recognition.start();
+        //             }, 500)
+        //         }
+        //         temp_recognition.onspeechend = function () {
+        //             console.log('Listing Stoped!');
+        //             play_audio('listening stoped');
+        //         }
+        //         temp_recognition.onresult = (e) => {
+        //             let temp_transcript = e.results[e.results.length - 1][0].transcript;
+        //             temp_transcript = temp_transcript.replace(".", "").toLowerCase().replace("Enter quantity ","");
+        //             temp_transcript = parseInt(temp_transcript)
+        //             console.log(temp_transcript);
+        //             quantity.innerText = temp_transcript;
+        //             play_audio('quantity set sucessfully');
+        //             if (handlessmode_data[0].handless_mode == "true") {
+        //                 recognition.start();
+        //             } else {
+        //                 recognition.stop();
+        //             }
+        //         }
+        //     }
+        //     break;
 
         case "add to cart":
         case "add to car":
@@ -659,7 +721,7 @@ recognition.onresult = (event) => {
             }
             temp_recognition.onresult = (e) => {
                 let temp_transcript = e.results[e.results.length - 1][0].transcript;
-                temp_transcript = temp_transcript.replace(".", "").replace("Enter Name ","");
+                temp_transcript = temp_transcript.replace(".", "").replace("Enter Name","").replace("Enter Name ","").replace("Enter name","");
                 console.log(temp_transcript);
                 checkout_name.value = temp_transcript;
                 play_audio('Name added sucessfully');
@@ -695,7 +757,7 @@ recognition.onresult = (event) => {
             }
             temp_recognition.onresult = (e) => {
                 let temp_transcript = e.results[e.results.length - 1][0].transcript;
-                temp_transcript = temp_transcript.replace(".", "").toLowerCase().replace("com.", ".com").replace("Enter email ","");
+                temp_transcript = temp_transcript.replace(".", "").toLowerCase().replace("com.", ".com").replace("enter the mail","").replace("enter email","").replace("enter","").replace("enter email","").replace("enter female","").replaceAll(" ","").replaceAll(",","");
                 console.log(temp_transcript);
                 checkout_email.value = temp_transcript;
                 play_audio('email added sucessfully');
@@ -731,7 +793,7 @@ recognition.onresult = (event) => {
             }
             temp_recognition.onresult = (e) => {
                 let temp_transcript = e.results[e.results.length - 1][0].transcript;
-                temp_transcript = temp_transcript.replace(".", "").replace("Enter phone ","")
+                temp_transcript = temp_transcript.replace(".", "").replace("Enter phone ","").replace("Enter Phone ","").replace("Enter phone","").replace("Enter","").replace("enter","").replace("phone","")
                 console.log(temp_transcript);
                 checkout_phone.value = temp_transcript;
                 play_audio('phone added sucessfully');
@@ -767,7 +829,7 @@ recognition.onresult = (event) => {
             }
             temp_recognition.onresult = (e) => {
                 let temp_transcript = e.results[e.results.length - 1][0].transcript;
-                temp_transcript = temp_transcript.replace(".", "").replace("Enter address ","")
+                temp_transcript = temp_transcript.replace(".", "").replace("Enter address ","").replace("Enter address","").replace("Enter Address","")
                 console.log(temp_transcript);
                 checkout_address.value = temp_transcript;
                 play_audio('address added sucessfully');
@@ -803,7 +865,7 @@ recognition.onresult = (event) => {
             }
             temp_recognition.onresult = (e) => {
                 let temp_transcript = e.results[e.results.length - 1][0].transcript;
-                temp_transcript = parseInt(temp_transcript.replace(".", "").replace("Enter zip ",""))
+                temp_transcript = parseInt(temp_transcript.replace(".", "").replace("Enters in","").replace("Enter zip","").replace("Enter Zip ","").replace("Enter Zip","").replace("zip","").replace("Enter","").replaceAll(" ",""))
                 console.log(temp_transcript);
                 checkout_zip.value = temp_transcript;
                 play_audio('zip added sucessfully');
@@ -839,7 +901,7 @@ recognition.onresult = (event) => {
             }
             temp_recognition.onresult = (e) => {
                 let temp_transcript = e.results[e.results.length - 1][0].transcript;
-                temp_transcript = temp_transcript.replace(".", "").replace("Enter city ","")
+                temp_transcript = temp_transcript.replace(".", "").replace("Enter city ","").replace("Enter city","").replace("Enter City","")
                 checkout_city.value = temp_transcript;
                 play_audio('city added sucessfully');
                 blind_mode_cheaker();
@@ -874,7 +936,7 @@ recognition.onresult = (event) => {
             }
             temp_recognition.onresult = (e) => {
                 let temp_transcript = e.results[e.results.length - 1][0].transcript;
-                temp_transcript = temp_transcript.replace(".", "").replace("Enter country ","")
+                temp_transcript = temp_transcript.replace(".", "").replace("Enter country ","").replace("Enter country","").replace("Enter Country","")
                 console.log(temp_transcript);
                 checkout_country.value = temp_transcript;
                 play_audio('country added sucessfully');
@@ -990,23 +1052,274 @@ recognition.onresult = (event) => {
             }, 500);
             break;
 
-        default:
-            console.log('Sorry Page Not Found!')
-            break;
+        // default:
+        //     console.log('Sorry Page Not Found!')
+        //     break;
     }
 }
+if (innerWidth>=768) {
+    document.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        try {
+            recognition.start();
+    
+        } catch (error) {
+            recognition.stop();
+            console.log(error);
+        }
+    });
+} else {
+    (function () {
+        var delay;
+        var longpress = 1300;
+          document.addEventListener('mousedown', function (e) {
+            delay = setTimeout(check, longpress);
+            function check() {
+                e.preventDefault();
+                try {
+                    recognition.start();
+                
+                } catch (error) {
+                    recognition.stop();
+                    console.log(error);
+                }
+            }
+          }, true);
+          
+        //   document.addEventListener('mouseup', function (e) {
+        //     clearTimeout(delay);
+        //   });
+          
+        //   document.addEventListener('mouseout', function (e) {
+        //     clearTimeout(delay);
+        //   });
+          
+    }());
+}
 
-
-document.addEventListener("contextmenu", (e) => {
-    e.preventDefault();
-    try {
-        recognition.start();
-
-    } catch (error) {
-        recognition.stop();
-        console.log(error);
-    }
-});
 document.addEventListener("click", (e) => {
     recognition.stop();
 });
+
+
+    // case "home":
+        // case "home menu":
+        // case "open home":
+        // case "back to home":
+        // case "back home":
+            // recognition.stop();
+            // play_audio('Opening HomePage!')
+            // document.location.href = '/../../../';
+           
+
+        // case "headphones":
+        // case "headphones menu":
+        // case "headphone":
+        // case "headphone menu":
+        // case "open headphones":
+        // case "open headphone":
+        //     recognition.stop();
+        //     play_audio('Opening Headphones!')
+        //     document.location.href = 'http://127.0.0.1:5500/html/headphones.html'
+        //     break;
+
+        // case "speakers":
+        // case "speakers menu":
+        // case "speaker":
+        // case "speaker menu":
+        // case "open speakers":
+        // case "open speaker":
+        //     recognition.stop();
+        //     play_audio('Opening Speakers!')
+        //     document.location.href = 'http://127.0.0.1:5500/html/speakers.html'
+        //     break;
+
+        // case "earphones":
+        // case "earphones menu":
+        // case "earphone":
+        // case "earphone menu":
+        // case "open earphones":
+        // case "open earphone":
+        //     recognition.stop();
+        //     play_audio('Opening Earthphones!')
+        //     document.location.href = 'http://127.0.0.1:5500/html/earthphones.html'
+        //     break;
+
+        // case "** 99 mark 2":
+        // case "** 99 mark two":
+        // case "open ** 99 mark 2":
+        // case "open ** 99 mark two":
+        //     recognition.stop();
+        //     play_audio('Opening XX99 MARK II HEADPHONES!')
+        //     document.location.href = 'http://127.0.0.1:5500/html/products/headphones/XX99_MARK_II_HEADPHONES.html'
+        //     break;
+
+        // case "** 99 mark 1":
+        // case "** 99 mark one":
+        // case "open ** 99 mark 1":
+        // case "open ** 99 mark one":
+        //     recognition.stop();
+        //     play_audio('Opening XX99 MARK 1 HEADPHONES!')
+        //     document.location.href = 'http://127.0.0.1:5500/html/products/headphones/XX99_MARK_I_HEADPHONES.html'
+        //     break;
+
+        // case "** 59":
+        // case "open ** 59":
+        //     recognition.stop();
+        //     play_audio('Opening XX59!')
+        //     document.location.href = 'http://127.0.0.1:5500/html/products/headphones/XX59_HEADPHONES.html'
+        //     break;
+
+        // case "zx 9 speaker":
+        // case "zx 9 speakers":
+        // case "zx 9":
+        // case "open zx 9 speaker":
+        // case "open zx 9":
+        //     recognition.stop();
+        //     play_audio('opening zx9 speaker!')
+        //     document.location.href = 'http://127.0.0.1:5500/html/products/speakers/zx9_speaker.html'
+        //     break;
+
+        // case "zx 7 speaker":
+        // case "zx 7 speakers":
+        // case "zx 7":
+        // case "open zx 7 speaker":
+        // case "open zx 7":
+        //     recognition.stop();
+        //     play_audio('opening zx7 speaker!')
+        //     document.location.href = 'http://127.0.0.1:5500/html/products/speakers/zx7_speaker.html'
+        //     break;
+
+        // case "yx 1 earphones":
+        // case "yx one earphones":
+        // case "yx 1 earphone":
+        // case "yx one earphone":
+        // case "yx 1":
+        // case "open yx 1 earphone":
+        // case "open yx 1":
+        //     recognition.stop();
+        //     play_audio('opening yx1 earphones!')
+        //     document.location.href = 'http://127.0.0.1:5500/html/products/earthphones/YX1_WIRELESS_EARPHONES.html'
+        //     break;
+
+        // case "open blind mode setting":
+        // case "open blind mode settings":
+        // case "blind mode setting":
+        // case "blind mode settings":
+        // case "blind mode":
+        // case "blind":
+        // case "open blind mode settings":
+        // case "open blind mode setting":
+        //     if (!is_sidemenu_open) {
+        //         sidemenu.style.left = "-10px";
+        //         sidemenu.style.transition = "0.1s";
+        //         is_sidemenu_open = true;
+        //     }
+        //     else {
+        //         play_audio("blind mode setting already opened")
+        //     }
+        //     break;
+
+        // case "close blind mode setting":
+        // case "close blind mode settings":
+        // case "close blind mode settings":
+        // case "close blind mode setting":
+        // case "close blind":
+        //     if (!is_sidemenu_open) {
+        //         play_audio("blind mode setting already closed")
+        //     }
+        //     else {
+        //         sidemenu.style.left = "-179px";
+        //         sidemenu.style.transition = "0.1s";
+        //         is_sidemenu_open = false;
+        //     }
+        //     break;
+
+        // case "enable blind mode":
+        // case "blind mode enable":
+        // case "enable blind":
+        // case "on blind":
+        // case "blind on":
+        // case "blind mode on":
+        //     blindmode.checked = true;
+        //     blindmode_data = [{ blind_mode: "true" }];
+        //     blindmode_data = JSON.stringify(blindmode_data)
+        //     localStorage.setItem("allblindmode_data", blindmode_data);
+        //     break;
+
+        // case "disable blind mode":
+        // case "blind mode disable":
+        // case "disable blind":
+        // case "off blind":
+        // case "blind off":
+        // case "blind mode off":
+        //     blindmode.checked = false;
+        //     blindmode_data = [{ blind_mode: "false" }];
+        //     blindmode_data = JSON.stringify(blindmode_data)
+        //     localStorage.setItem("allblindmode_data", blindmode_data);
+        //     break;
+
+        // case "enable handless mode":
+        // case "enable handless mod":
+        // case "handless mode on":
+        // case "on handless mode":
+        // case "on handless":
+        // case "handless on":
+        // case "handless mode enable":
+        // case "handless enable":
+        // case "handless mode":
+        // case "handless":
+        // case "enable headless mode":
+        // case "enable endless mode":
+        // case "handsfree":
+        // case "hands free":
+        // case "enable handsfree":
+        // case "enable hands free":
+        // case "handfree":
+        // case "hand free":
+        // case "enable handfree":
+        // case "enable hand free":
+        //     if (handlessmode_data[0].handless_mode == "false") {
+        //         handlessmode_data[0].handless_mode = "true";
+        //         handlessmode_data = JSON.stringify(handlessmode_data);
+        //         localStorage.setItem("allhandlessmode_data", handlessmode_data);
+        //         recognition.stop();
+        //         play_audio('handless mode enabled')
+        //         setTimeout(async () => {
+        //             recognition.start();
+        //             console.log(handlessmode_data[0].handless_mode);
+        //         }, 500);
+        //     } else {
+        //         play_audio('handless mode already enabled')
+        //     }
+        //     recognition.continuous = true;
+        //     break;
+
+        // case "disable handless mode":
+        // case "handless mode off":
+        // case "off handless mode":
+        // case "off handless":
+        // case "handless off":
+        // case "handless mode disable":
+        // case "handless disable":
+        // case "handless mode":
+        // case "handless":
+        // case "disable headless mode":
+        // case "disable endless mode":
+        // case "handsfree":
+        // case "disable handsfree":
+        // case "handfree":
+        // case "disable handfree":
+        //     if (handlessmode_data[0].handless_mode == "true") {
+        //         handlessmode_data[0].handless_mode = "false";
+        //         handlessmode_data = JSON.stringify(handlessmode_data);
+        //         localStorage.setItem("allhandlessmode_data", handlessmode_data);
+        //         recognition.stop();
+        //         play_audio('handless mode disabled')
+        //     } else {
+        //         play_audio('handless mode is already disabled')
+        //     }
+        //     recognition.continuous = false;
+        //     break;
+
+
